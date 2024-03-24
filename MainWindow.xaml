@@ -1,74 +1,146 @@
 ﻿<Window x:Class="PokemonIndex.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="375">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="107*"/>
-            <RowDefinition Height="110*"/>
-        </Grid.RowDefinitions>
-        <TabControl Grid.RowSpan="2" Background="Red">
-            <!-- Tab 1: Pokémon Zoeken -->
-            <TabItem Foreground="Red" Header="Pokémon Zoeken">
-                <Grid Margin="10" Grid.Background="White" >
+        Title="MainWindow" Height="1000
+        " Width="750">
+    <TabControl Background="White" BorderThickness="6" BorderBrush="Red">
+        <!-- Tab 1: Pokémon Zoeken -->
+        <TabItem Header="Pokémon Zoeken" FontSize="16" FontFamily="Unispace" BorderBrush="Red" BorderThickness="10" Background="White">
+            <StackPanel Margin="20">
+                <!-- Zoekvak en knop -->
+                <Grid Margin="0 0 0 20">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" MinHeight="43.28"/>
+                        <RowDefinition Height="Auto" MinHeight="125"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" MinWidth="129"/>
+                        <ColumnDefinition Width="Auto" MinWidth="143"/>
+                        <ColumnDefinition Width="164"/>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="0"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Zoekvak en knop -->
-                    <Label Content="Pokémon Naam:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="PokemonNameTextBox" Grid.Row="0" Grid.Column="1" Margin="5"/>
-                    <Border CornerRadius="5" Background="#FFFE0505" BorderBrush="#FFFE0505" BorderThickness="1" Padding="5" Margin="5">
-                        <Button Content="Zoeken" Click="SearchButton_Click" FontFamily="Segoe UI" FontWeight="Bold" FontSize="14" Foreground="Red" Background="White"/>
-                    </Border>
+                    <Label Content="Pokémon Naam:" Foreground="Red" VerticalAlignment="Center" FontSize="16" FontFamily="Unispace" Height="30" Grid.Column="0"/>
+                    <TextBox x:Name="PokemonNameTextBox" BorderBrush="Black" Margin="3,10,10,10" FontSize="16" Grid.Row="0" Grid.Column="1"/>
+                    <Button Content="Zoeken" BorderThickness="5" BorderBrush="Red" Click="SearchButton_Click" FontSize="18" FontFamily="Unispace" Foreground="Red" Background="White" Grid.Row="0" Grid.Column="1" Margin="143,0,-110,0" Grid.ColumnSpan="4"/>
 
-                    <!-- Pokémon informatie labels -->
-                    <Label Content="Naam:" Foreground="Red" Grid.Row="2" Grid.Column="0" Margin="0,5,0,0"/>
-                    <Label x:Name="NameLabel" Grid.Row="2" Grid.Column="1" Margin="5" Foreground="Red"/>
-                    <Label Content="Type:" Foreground="Red" Grid.Row="3" Grid.Column="0" Margin="0,5,0,0"/>
-                    <Label x:Name="TypeLabel" Grid.Row="3" Grid.Column="1" Margin="5" Foreground="Red"/>
-                    <Label Content="Gewicht:" Foreground="Red" Grid.Row="4" Grid.Column="0" Margin="0,5,0,0"/>
-                    <Label x:Name="WeightLabel" Grid.Row="4" Grid.Column="1" Margin="5" Foreground="Red"/>
-                    <Label Content="Hoogte:" Foreground="Red" Grid.Row="5" Grid.Column="0" Margin="0,5,0,0"/>
-                    <Label x:Name="HeightLabel" Grid.Row="5" Grid.Column="1" Margin="5" Foreground="Red"/>
-                    <Label x:Name="StatsLabel" Foreground="Red" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,34,0,-25"/>
-
-                    <!-- Pokémon sprite -->
-                    <Image x:Name="PokeSprite" Grid.Row="3" Grid.RowSpan="6" Grid.Column="1" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150"/>
-                    <Button Grid.Column="1" Background="Red" HorizontalAlignment="Left" Height="100" Margin="65,76,0,0" Grid.Row="5" VerticalAlignment="Top" Width="100" Click="Capture_Click">
-                        <Image Source="Images/pokeball_PNG21.png" Height="90" Width="90"/>
-                    </Button>
+                    <!-- Tweede rij voor knoppen -->
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="5" Margin="0,10,-118,0" Grid.Row="1">
+                        <Button x:Name="Randomize" Content="Randomize" FontSize="20"  FontFamily="Unispace" Foreground="Red" Background="White" BorderBrush="Red" BorderThickness="5" Width="125" Height="125" Margin="0,0,15,0" Click="Randomize_Click" FontWeight="Bold"/>
+                        <Button Background="Red" Height="125" Width="130" Margin="0,0,10,0" Click="Capture_Click">
+                            <Image Source="Images/pokeball_PNG21.png" Height="125" Width="125"/>
+                        </Button>
+                        <Button x:Name="Reset_chances_" FontFamily="Unispace" Content="Reset chances?" FontSize="20" Foreground="Red" Background="White" BorderBrush="Red" BorderThickness="5" Width="274" Height="125" Click="Reset_chances__Click" FontWeight="Bold"/>
+                    </StackPanel>
+                    <Image x:Name="PokeSprite" Grid.Column="2" Margin="72,147,-90,-212" Grid.Row="1" Grid.ColumnSpan="3"/>
 
                 </Grid>
-            </TabItem>
 
-            <!-- Tab 2: Basisgegevens -->
-            <TabItem Foreground="Red" Header="Basisgegevens">
-                <Grid Margin="10" Grid.Background="White" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+
+                <!-- Pokémon informatie labels -->
+                <StackPanel Margin="0 20">
+                    <Label Content="Naam:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="NameLabel" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    <Label Content="Shiny:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="ShinyLabel" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    <Label Content="Type:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="TypeLabel" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    <Label Content="Gewicht:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="WeightLabel" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    <Label Content="Hoogte:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="HeightLabel" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    <Label x:Name="StatsLabel" Foreground="Red" Margin="0 34 -25 -25" FontSize="16" FontFamily="Unispace"/>
+                </StackPanel>
+
+                <!-- Pokémon sprite -->
+
+            </StackPanel>
+        </TabItem>
+
+        <!-- Tab 2 -->
+        <TabItem Header="Seen" FontSize="16" FontFamily="Unispace" BorderBrush="Red" BorderThickness="10" Background="White">
+            <StackPanel Margin="20">
+
+                <!-- Gezien Pokémon ListBox -->
+                <StackPanel Margin="0 0 0 20">
+
+                    <Label Content="SEEN" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="PokeSprite2" Width="296" Height="148"/>
+                        <ListBox x:Name="SeenPokemonListBox" Width="350" Height="500"  Background="White" BorderThickness="5" BorderBrush="Red" Foreground="Red" FontSize="16" FontFamily="Unispace" SelectionChanged="SeenPokemonListBox_SelectionChanged"/>
+                    </StackPanel>
+
+                </StackPanel>
+                <Button Content="CLEAR" Foreground="Red" Background="White" BorderBrush="Red" BorderThickness="5" Width="400" Height="80" FontSize="36" Click="ClearJSON_FileSeen"/>
+
+
+
+                <!-- Clear Button -->
+            </StackPanel>
+        </TabItem>
+
+
+        <TabItem Header="Captured" FontSize="16" FontFamily="Unispace" BorderBrush="Red" BorderThickness="10" Background="White">
+            <StackPanel Margin="20">
+                <StackPanel Margin="0 0 0 20">
+
+                    <!-- Image Pokémon Pokedex -->
+                    <Label Content="CAPTURED" Foreground="Red" FontSize="16" FontFamily="Unispace" />
 
                     <!-- Gevangen Pokémon ListBox -->
-                    <ListBox x:Name="CaughtPokemonListBox" Grid.Column="0" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" Width="100" />
-                    <Image x:Name="PokeSprite2" Margin="0,7,100,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"
-                           Grid.Column="0" />
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="PokeSprite3" Width="296" Height="148"/>
+                        <ListBox x:Name="CaughtPokemonListBox" Width="350" Height="500" Background="White" BorderThickness="5" BorderBrush="Red" Foreground="Red" FontSize="16" FontFamily="Unispace"  Margin="0 0 0 0"  SelectionChanged="CaughtPokemonListBox_SelectionChanged"/>
+                    </StackPanel>
+                    <Button Content="CLEAR" Foreground="Red" Background="White" BorderBrush="Red" BorderThickness="5" Width="400" Height="80" Margin="0 20 0 0" FontSize="36" Click="ClearJSON_FileCaught"/>
 
-                    <!-- Gezien Pokémon ListBox -->
-                    <ListBox x:Name="SeenPokemonListBox" Grid.Column="2" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" VerticalContentAlignment="Stretch" Width="100" SelectionChanged="SeenPokemonListBox_SelectionChanged"></ListBox>
+                </StackPanel>
 
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+            </StackPanel>
+        </TabItem>
+
+
+        <!-- Tab 4: Search -->
+        <TabItem Header="Pokedex" HorizontalAlignment="Left" Width="86" FontSize="16" FontFamily="Unispace" BorderBrush="Red" BorderThickness="10" Background="White">
+            <StackPanel Margin="20">
+                <!-- abdu -->
+
+                <!-- Add Button for refreshing checkmarks -->
+                <!-- Search Label and TextBox -->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 20">
+                    <Label Content="Search Pokémon:" Foreground="Red" FontSize="16" FontFamily="Unispace" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtSearch" Margin="10" FontSize="16" Width="417" TextChanged="TxtSearch_TextChanged"/>
+                </StackPanel>
+
+                <Button x:Name="btnRefresh" Background="White" BorderThickness="5" BorderBrush="Red" Foreground="Red" FontSize="16" FontFamily="Unispace" HorizontalAlignment="Right" Margin="0 0 20 0" Click="btnRefresh_Click" Content="Refresh Checkmarks" Width="200"/>
+                <!-- Search Button -->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 20" Height="491">
+                    <StackPanel Margin="0 20" Height="471" VerticalAlignment="Top" Width="136">
+                        <Label Content="Naam:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                        <Label x:Name="NameLabel2" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                        <Label Content="Type:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                        <Label x:Name="TypeLabel2" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                        <Label Content="Gewicht:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                        <Label x:Name="WeightLabel2" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                        <Label Content="Hoogte:" Foreground="Red" FontSize="16" FontFamily="Unispace"/>
+                        <Label x:Name="HeightLabel2" Margin="0 5" Foreground="Black" FontSize="16" FontFamily="Unispace"/>
+                    </StackPanel>
+
+                    <StackPanel Width="280" Height="280" VerticalAlignment="Bottom">
+                        <Image x:Name="PokeSprite4" Width="280" Height="280"/>
+                    </StackPanel>
+                    <ListBox x:Name="PokemonListBox" BorderBrush="Red" BorderThickness="5" Width="256" Height="445" Margin="0 10 10 10" FontSize="14" SelectionChanged="PokemonListBox_SelectionChanged"/>
+                </StackPanel>
+                <TextBlock x:Name="WikipediaInfoTextBlock" TextWrapping="Wrap" Height="150
+                           " Width="552" FontSize="16" FontFamily="Unispace"/>
+                <TextBlock x:Name="WikipediaInfoTextBlock2" TextWrapping="Wrap" Height="150
+                           " Width="552" FontSize="16" FontFamily="Unispace"/>
+
+
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </Window>

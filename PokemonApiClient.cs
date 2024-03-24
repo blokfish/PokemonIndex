@@ -1,62 +1,58 @@
-﻿using Newtonsoft.Json;
+﻿// PokemonApiClient.cs
+
 using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PokemonIndex
 {
-    internal class PokemonApiClient
+    public class PokemonApiClient
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
-        private const string BaseUrl = "https://pokeapi.co/api/v2/pokemon/";
+        private readonly HttpClient _httpClient;
 
         public PokemonApiClient()
         {
-            _httpClient.BaseAddress = new Uri(BaseUrl);
+            _httpClient = new HttpClient();
         }
 
         public async Task<Pokemon> GetPokemonAsync(string pokemonName)
         {
-            if (string.IsNullOrWhiteSpace(pokemonName))
-            {
-                throw new ArgumentException("Pokemon name cannot be null or empty.", nameof(pokemonName));
-            }
-
             try
             {
-                // Construct the URI with the correct scheme ('https')
-                var apiUrl = $"https://pokeapi.co/api/v2/pokemon/{pokemonName.ToLower()}";
+                HttpResponseMessage response = await _httpClient.GetAsync($"https://pokeapi.co/api/v2/pokemon/{pokemonName}");
 
-                // Send the HTTP GET request
-                HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
-
-                // Check if the response is successful
                 if (response.IsSuccessStatusCode)
                 {
-                    // Read the response content as string
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    string responseData = await response.Content.ReadAsStringAsync();
 
-                    // Deserialize the JSON response to a Pokemon object
-                    return JsonConvert.DeserializeObject<Pokemon>(jsonResponse);
+                    if (!string.IsNullOrEmpty(responseData))
+                    {
+                        Pokemon pokemon = JsonConvert.DeserializeObject<Pokemon>(responseData);
+                        return pokemon;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Empty response received for Pokémon: {pokemonName}");
+                        return null;
+                    }
                 }
-
-                return null; // Pokemon not found
+                else
+                {
+                    Console.WriteLine($"API returned error status code: {response.StatusCode} for Pokémon: {pokemonName}");
+                    return null;
+                }
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                // Handle HTTP request errors
-                throw new PokemonApiException("Error occurred while calling the Pokemon API.", ex);
+                Console.WriteLine($"Error fetching Pokémon data for '{pokemonName}': {ex.Message}");
+                return null;
             }
         }
 
 
 
-    }
-
-    public class PokemonApiException : Exception
-    {
-        public PokemonApiException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
     }
 }
+
